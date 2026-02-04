@@ -10,7 +10,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## In Class Exercises
+## In-Class Exercises
 
 ### Set 1 
 
@@ -39,9 +39,49 @@ knitr::opts_chunk$set(echo = TRUE)
 6. Use indexing to create a new vector that contains the first 3 elements and last 3 elements of your combined vector. 
 7. Bonus/extra: do the above in a way that would work no matter how long the vector is (as long as it's longer than 2 elements)
 
-## In Class Activity
+## In-Class Activities
 
-1. Write a function to simulate rolling a 6-sided die and returns the result.
+1. Missingness 
+
+* Use is.na(x) to find which entries are missing in the vector below.
+* Create x_no_na that removes the missing values.
+* Replace the missing values with the mean of the non-missing values (compute the mean yourself from x_no_na).
+     * Hint: x[is.na(x)] <- ...
+
+```{r}
+x <- c(3.2, NA, 4.1, 5.0, NA, 2.8)
+
+```
+
+1. Logical indexing
+
+* Using the `grades` vector from class:
+* Create a logical vector is_a <- grades >= 90
+* Print the values that are A’s (you already do this)
+* Now print the indices/positions of the A’s using which(is_a)
+* How many A’s are there? Do it two ways:
+     * length(grades[is_a])
+     * sum(is_a) (since TRUE counts as 1)
+
+```{r}
+
+```
+
+1.  Emperical probabilities
+
+* Set a seed: `set.seed(2401)`
+* Simulate 200 die rolls (fair die) in a vector rolls (use sample(1:6, ...))
+* Use table(rolls) to count how many of each face occurred.
+* Convert counts to proportions (estimated probabilities) by dividing by length(rolls).
+* Which face was most common in your simulation?
+
+
+```{r}
+
+```
+
+
+1. Write a *function* to simulate rolling a 6-sided die and returns the result.
 
 ```{r}
 
@@ -59,13 +99,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Write a function that takes two people name's as strings, simulates rolling a 6-sided die for each of the names, then returns the name of the person with the higher roll. The function should reroll once on a tie, but if there is a second tie, it should return "draw". 
 
+
 ```{r}
 # Your one-roll function goes here
 
 ```
 
 
-2. Write a second function (you may start by modifying the first one) that takes two names as strings, simulates both of them rolling die 15 times, and returns the name of the person who "won" more rolls. Don't reroll ties this time, but don't count them as "wins". 
+1. Write a second function (you may start by modifying the first one) that takes two names as strings, simulates both of them rolling die 15 times, and returns the name of the person who "won" more rolls. Don't reroll ties this time, but don't count them as "wins". 
+
+Process: 
+
+* Simulate 15 rolls each for two players, p1 and p2 (vectors).
+* Create a logical vector p1_wins <- p1 > p2
+* Create a logical vector p2_wins <- p2 > p1
+* Create a logical vector ties <- p1 == p2
+* Report:
+     * number of p1 wins (sum(p1_wins))
+     * number of p2 wins (sum(p2_wins))
+     * number of ties (sum(ties))
 
 ```{r}
 
