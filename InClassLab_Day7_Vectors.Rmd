@@ -15,30 +15,109 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Set 1 
 
 1. Use the colon operator : to create a vector `n` of numbers from 10:49
+
+```{r}
+n <- 10:49
+n
+```
+
+
 2. Use the `length()` function to get the number of elements in `n`
+
+```{r}
+length(n)
+```
+
+
 3. Add 1 to each element in `n` and print the result
+
+```{r}
+n + 1
+```
+
 4. Create a vector `m` that contains the numbers 10 to 1 (in that order), in two different ways, neither of which is just typing "10, 9 , 8 ...".  Hint: use one of the helper functions we learned.
+
+```{r}
+m <- seq(10, 1, by = -1)
+m
+```
+
+
 5. Subtract `m` FROM `n`. Note the recycling!
+
+```{r}
+m - n
+```
+
 
 ### Set 2 
 
 1. Use the `seq()` function to produce a range of numbers from -5 to 10 in `0.1` increments. Store it in a variable `x_range`
+
+```{r}
+x_range <- seq(-5, 10, by = 0.1)
+x_range
+```
+
+
 2. Create a vector `sin_wave` by calling the `sin()` function on each element in `x_range`.
+
+```{r}
+sin_wave <- sin(x_range)
+sin_wave
+```
+
 3. Use the `plot()` function to plot your "wave"!
      + the x vector goes in the first argument, the y vector goes in the second argument
      + You'll need to add the argument `type = "l"` for a line. NOTE: That is a lower case "L", not a 1. 
+
+```{r}
+plot(x_range, sin_wave, type = 'l')
+```
 
 
 ### Set 3 
 
 1. Use `:` to make a vector of the integers from 40 to 50 called `first_nums`
+
+```{r}
+first_nums <- 40:50
+```
+
 2. Use `seq()` to make a vector of the integers from 51 to 60 called `next_nums`
+
+```{r}
+next_nums <- seq(51, 60)
+```
+
 3. Combine them using `c()`
+
+```{r}
+j <- c(first_nums, next_nums)
+
+```
+
 4. Use indexing to access the 7th number in your combined vector
+
+```{r}
+j[7]
+
+```
+
+
 5. Use indexing to access the 5th to the 8th numbers in your combined vector
+
+```{r}
+j[5]
+j[8]
+```
+
 6. Use indexing to create a new vector that contains the first 3 elements and last 3 elements of your combined vector. 
 7. Bonus/extra: do the above in a way that would work no matter how long the vector is (as long as it's longer than 2 elements)
-
+```{r}
+l <- c(j[1:3], tail(j, 3))
+l
+```
 ## In-Class Activities
 
 1. Missingness 
@@ -64,7 +143,12 @@ x <- c(3.2, NA, 4.1, 5.0, NA, 2.8)
      * sum(is_a) (since TRUE counts as 1)
 
 ```{r}
+grades <- c(99,  77, 100,  91,  87,  72,  82,  94,  81)
 
+is_a <- grades >= 90
+is_a
+grades[is_a]
+length(grades[is_a])
 ```
 
 1.  Emperical probabilities
@@ -77,14 +161,22 @@ x <- c(3.2, NA, 4.1, 5.0, NA, 2.8)
 
 
 ```{r}
+set.seed(2401)
+rolls <- sample(1:6, 200, replace = TRUE)
+table(rolls) / length(rolls)
 
 ```
+The most common was Face 2
 
 
 1. Write a *function* to simulate rolling a 6-sided die and returns the result.
 
 ```{r}
-
+die <- function() {
+  roll <- sample(1:6, 1)
+  return(roll)
+}
+die()
 ```
 
 
@@ -92,8 +184,12 @@ x <- c(3.2, NA, 4.1, 5.0, NA, 2.8)
 1. Write a function to simulate rolling 2 6-sided dice that returns the sum of the rolls. 
 
 ```{r}
-
-
+dice <- function() {
+  roll1 <- sample(1:6, 1)
+  roll2 <- sample(1:6, 1)
+  return(sum(roll1, roll2))
+  }
+dice()
 ```
 
 
@@ -102,7 +198,27 @@ x <- c(3.2, NA, 4.1, 5.0, NA, 2.8)
 
 ```{r}
 # Your one-roll function goes here
+name1 <- "Edwin"
+name2 <- "Jay"
+rollName <- function(name1, name2) {
+  roll1 <- sample(1:6, 1)
+  roll2 <- sample(1:6, 1)
+  
+  if (roll1 == roll2) {
+  roll1 <- sample(1:6, 1)
+  roll2 <- sample(1:6, 1)
+  }
 
+  if (roll1 > roll2){
+    print(c(name1, roll1))
+  }  else if (roll2 > roll1) {
+    print(c(name2, roll2))
+  }  else {
+  print('draw')
+}
+  
+}
+rollName(name1, name2)
 ```
 
 
@@ -120,14 +236,59 @@ Process:
      * number of ties (sum(ties))
 
 ```{r}
+name1 <- "Edwin"
+name2 <- "Jay"
+rollName <- function(name1, name2) {
+  p1 <- sample(1:6, 15, replace = TRUE)
+  p2 <- sample(1:6, 15, replace = TRUE)
+  
+  p1_wins <- p1 > p2
+  p2_wins <- p2 > p1
+  ties <- p1 == p2
 
 
+  print(c("number of p1 wins: ",(sum(p1_wins))))
+  print(c("number of p2 wins: ", (sum(p2_wins))))
+  print(c("number of ties: ",(sum(ties))))
+  
+  if (sum(p1_wins)> sum(p2_wins)) {
+    print(name1)
+}   else {
+      print(name2)
+    }
+  
+}
+rollName(name1, name2)
 ```
 
 
 3. Modify your function from (2) so that the person in the first argument has a die that is weighted to get higher numbers more often (you may decide the actual percentage change). Run the function ten or so times. Does the second person ever win?
 
 ```{r}
-# Your "cheating" function goes here
+name1 <- "Edwin"
+name2 <- "Jay"
+rollName <- function(name1, name2) {
+  prob1 <-c(0.5, 0.2, 0.1, 0.1, 0.05, 0.05)
+  prob2 <- sort(prob1, decreasing = FALSE)
+  
+  p1 <- sample(1:6, 15, replace = TRUE, prob = prob2)
+  p2 <- sample(1:6, 15, replace = TRUE, prob = prob1)
+  
+  p1_wins <- p1 > p2
+  p2_wins <- p2 > p1
+  ties <- p1 == p2
+
+
+  print(c("number of p1 wins: ",(sum(p1_wins))))
+  print(c("number of p2 wins: ", (sum(p2_wins))))
+  print(c("number of ties: ",(sum(ties))))
+  if (sum(p1_wins)> sum(p2_wins)) {
+    print(name1)
+}   else {
+      print(name2)
+    }
+}
+rollName(name1, name2)
 ```
+No, The second person never wins
 
